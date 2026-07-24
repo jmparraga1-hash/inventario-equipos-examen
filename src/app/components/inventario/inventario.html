@@ -1,0 +1,51 @@
+<!-- inventario.html -->
+<div class="contenedor">
+  <h2>Inventario de Equipos Tecnológicos</h2>
+
+  <!-- Buscador -->
+  <div class="seccion busqueda">
+    <input [(ngModel)]="codigoBusqueda" placeholder="Buscar por código (ej. EQ001)">
+    <button (click)="buscarEquipo()">Buscar</button>
+    <p *ngIf="equipoEncontrado">
+      Encontrado: {{ equipoEncontrado.nombre }} - {{ equipoEncontrado.estado }}
+    </p>
+    <p *ngIf="mensaje">{{ mensaje }}</p>
+  </div>
+
+  <!-- Formulario de registro -->
+  <div class="seccion registro">
+    <h3>Registrar nuevo equipo</h3>
+    <input [(ngModel)]="nuevoEquipo.codigo" placeholder="Código">
+    <input [(ngModel)]="nuevoEquipo.nombre" placeholder="Nombre">
+    <input [(ngModel)]="nuevoEquipo.categoria" placeholder="Categoría">
+    <input [(ngModel)]="nuevoEquipo.laboratorio" placeholder="Laboratorio">
+    <input [(ngModel)]="nuevoEquipo.responsable" placeholder="Responsable">
+    <button (click)="registrarEquipo()">Registrar</button>
+  </div>
+
+  <!-- Tabla de equipos -->
+  <table class="tabla-equipos">
+    <thead>
+      <tr>
+        <th>Código</th><th>Nombre</th><th>Categoría</th><th>Laboratorio</th><th>Estado</th><th>Responsable</th><th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let eq of equipos">
+        <td>{{ eq.codigo }}</td>
+        <td>{{ eq.nombre }}</td>
+        <td>{{ eq.categoria }}</td>
+        <td>{{ eq.laboratorio }}</td>
+        <td>{{ eq.estado }}</td>
+        <td>{{ eq.responsable }}</td>
+        <td>
+          <select #estadoSelect (change)="actualizarEstado(eq.codigo, estadoSelect.value)">
+            <option value="Disponible" [selected]="eq.estado === 'Disponible'">Disponible</option>
+            <option value="En Mantenimiento" [selected]="eq.estado === 'En Mantenimiento'">En Mantenimiento</option>
+            <option value="Dañado" [selected]="eq.estado === 'Dañado'">Dañado</option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
